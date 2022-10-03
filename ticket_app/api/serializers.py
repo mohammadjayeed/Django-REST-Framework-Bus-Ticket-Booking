@@ -16,4 +16,8 @@ class ReservationSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = "__all__"
 
-        
+
+class SeatBookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SeatBooking
+        fields = "__all__"
