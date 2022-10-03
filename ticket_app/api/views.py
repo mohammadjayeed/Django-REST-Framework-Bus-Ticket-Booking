@@ -4,6 +4,8 @@ from ticket_app.models import *
 from .serializers import *
 
 
+
+
 class PassengerViewSet(ModelViewSet):
     queryset = Passenger.objects.all()
     serializer_class = PassengerSerializer
