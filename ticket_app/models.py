@@ -31,11 +31,6 @@ class Passenger(models.Model):
         return f" name : {self.first_name} {self.last_name}"
 
 
-
-
-
-    
-
 class Reservation(models.Model):
 
     passenger = models.ForeignKey(Passenger,on_delete=models.CASCADE,related_name='passenger')

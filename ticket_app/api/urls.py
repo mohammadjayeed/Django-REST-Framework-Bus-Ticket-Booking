@@ -11,5 +11,6 @@ router.register('reservation',ReservationViewSet)
 
 urlpatterns = [
     
-    path('',include(router.urls))
+    path('',include(router.urls)),
+    path('re/',ReservationAPIView.as_view(),name='re')
 ]
