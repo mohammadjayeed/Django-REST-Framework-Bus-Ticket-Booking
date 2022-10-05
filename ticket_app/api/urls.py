@@ -2,15 +2,12 @@ from django.urls import path,include
 from rest_framework.routers import DefaultRouter
 from .views import *
 
-
 router = DefaultRouter()
-router.register('passenger',PassengerViewSet)
-router.register('bus',BusViewSet)
-router.register('reservation',ReservationViewSet)
-
+router.register('passengers',PassengerViewSet)
+router.register('bus-schedule-chart',BusViewSet)
 
 urlpatterns = [
     
     path('',include(router.urls)),
-    path('re/',ReservationAPIView.as_view(),name='re')
+    path('reserve/',book_reservation,name='reserve')
 ]
