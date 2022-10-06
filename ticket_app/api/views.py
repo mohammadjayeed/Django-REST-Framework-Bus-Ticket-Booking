@@ -7,7 +7,7 @@ from ticket_app.models import *
 from rest_framework import status
 from rest_framework.decorators import api_view
 from .serializers import *
-
+from django.db import transaction
 
 class PassengerViewSet(ReadOnlyModelViewSet):
     queryset = Passenger.objects.all()
@@ -21,23 +21,23 @@ class BusViewSet(ModelViewSet):
 
 @api_view(['POST'])
 def book_reservation(request):
-    
-    bus = Bus.objects.get(id=request.data['travel_id'])
+    with transaction.atomic():
+        bus = Bus.objects.get(id=request.data['travel_id'])
 
-    passenger = Passenger()
-    passenger.first_name = request.data['first_name']
-    passenger.last_name = request.data['last_name']
-    passenger.email = request.data['email']
-    passenger.mobile_number = request.data['mobile_number']
-    passenger.identification_number = request.data['identification_number']
-    passenger.save()
+        passenger = Passenger()
+        passenger.first_name = request.data['first_name']
+        passenger.last_name = request.data['last_name']
+        passenger.email = request.data['email']
+        passenger.mobile_number = request.data['mobile_number']
+        passenger.identification_number = request.data['identification_number']
+        passenger.save()
 
-    reservation = Reservation()
-    reservation.bus = bus
-    reservation.passenger = passenger
-    reservation.number_of_seat_booked = request.data['reservations']
+        reservation = Reservation()
+        reservation.bus = bus
+        reservation.passenger = passenger
+        reservation.number_of_seat_booked = request.data['reservations']
 
-    reservation.save()
+        reservation.save()
     return Response(status=status.HTTP_201_CREATED)
 
 
